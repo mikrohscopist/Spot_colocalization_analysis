@@ -1,0 +1,77 @@
+---
+title: "Logistic Regression based Proportions Test"
+output: html_document
+date: "2024-10-26"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# totalFOXP3
+
+## Import Data
+
+```{r}
+filename <- "spot_data_totalFOXP3.csv"
+datax <- read.csv(filename, row.names = 1)
+datax$NonEmpty <- as.numeric(!datax$Empty)
+datax <- datax[,c("Donor", "TcellType", "NonEmpty")]
+colnames(datax) <- c("Replicate", "Cond", "NonEmpty")
+```
+
+# Logistic Regression
+
+```{r}
+conditions <- unique(datax$Cond)
+coefficient_ind <- length(unique(datax$Replicate)) + 1
+results_p <- matrix(0, nrow=length(conditions), ncol=length(conditions))
+for(i in 1:(length(conditions)-1)){
+  for(j in (i+1):length(conditions)){
+    cur_datax <- datax[datax$Cond %in% c(conditions[c(i,j)]),]
+    cur_fit <- glm(NonEmpty ~ Replicate + Cond, data = cur_datax, family = binomial)
+    summary_fit <- summary(cur_fit)
+    results_p[i,j] <- summary_fit$coefficients[coefficient_ind,4]
+  }
+}
+colnames(results_p) <- rownames(results_p) <- conditions
+ind <- which(upper.tri(results_p))
+results_vector <- results_p[upper.tri(results_p)]
+results_vector <- p.adjust(results_vector, method = "bonferroni")
+results_p[ind] <- results_vector
+results_p
+```
+
+# UPA
+
+## Import Data
+
+```{r}
+filename <- "spot_data_UPA.csv"
+datax <- read.csv(filename, row.names = 1)
+datax$NonEmpty <- as.numeric(!datax$Empty)
+datax <- datax[,c("Donor", "TcellType", "NonEmpty")]
+colnames(datax) <- c("Replicate", "Cond", "NonEmpty")
+```
+
+## Logistic Regression
+
+```{r}
+conditions <- unique(datax$Cond)
+coefficient_ind <- length(unique(datax$Replicate)) + 1
+results_p <- matrix(0, nrow=length(conditions), ncol=length(conditions))
+for(i in 1:(length(conditions)-1)){
+  for(j in (i+1):length(conditions)){
+    cur_datax <- datax[datax$Cond %in% c(conditions[c(i,j)]),]
+    cur_fit <- glm(NonEmpty ~ Replicate + Cond, data = cur_datax, family = binomial)
+    summary_fit <- summary(cur_fit)
+    results_p[i,j] <- summary_fit$coefficients[coefficient_ind,4]
+  }
+}
+colnames(results_p) <- rownames(results_p) <- conditions
+ind <- which(upper.tri(results_p))
+results_vector <- results_p[upper.tri(results_p)]
+results_vector <- p.adjust(results_vector, method = "bonferroni")
+results_p[ind] <- results_vector
+results_p
+```
