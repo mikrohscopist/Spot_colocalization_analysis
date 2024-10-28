@@ -784,7 +784,7 @@ write.xlsx(df_export, file=paste0(output_dir, "/Data_Figure_5.xlsx"),
 
 # Figure
 
-```{r, fig.height=12, fig.width=9}
+```{r, "Figure_5", fig.height=12, fig.width=9}
 top_row <- ggarrange(plot_cells,plot_cells_fox, plot_cells_upa, 
                      widths = c(3,3, 3), nrow = 1,
                      labels = c("B", "C", "D"))  +
