@@ -6,3 +6,5 @@
 Figure_5-1.tif
 Figure_5-1.tif 
 "*.tif" 
+Thumbs.db
+**/Thumbs.db
