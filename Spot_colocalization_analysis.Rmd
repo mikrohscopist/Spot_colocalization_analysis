@@ -810,9 +810,17 @@ bottom_row <- ggarrange(plot_nuc_fox, plot_nuc_upa, plot_nuc_colo,
           ) +
   theme(plot.margin = margin(0, 0, 0, 0, "cm"))
 
-ggarrange(plot_images, top_row, middle_row, bottom_row, nrow = 4, 
+figure <- ggarrange(plot_images, top_row, middle_row, bottom_row, nrow = 4, 
           heights = c(2.3, 3, 3, 3))+
   theme(plot.margin = margin(0, 0.1, 0, 0.1, "cm"))
+
+figure
+
+# export figure as tiff
+tiff("D:/Repositories/2024_Cases_et_al/Figure_5.tiff", 
+     units="in", width=9, height=12, res=600)
+figure
+dev.off()
 ```
 
 ## Session Information

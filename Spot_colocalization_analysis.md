@@ -1,7 +1,7 @@
 ---
 title: "Spot co-localization analysis"
 author: "Sandy Kroh"
-date: "October 28, 2024"
+date: "November 01, 2024"
 output:
   html_document:
     toc: true
@@ -829,12 +829,27 @@ bottom_row <- ggarrange(plot_nuc_fox, plot_nuc_upa, plot_nuc_colo,
           ) +
   theme(plot.margin = margin(0, 0, 0, 0, "cm"))
 
-ggarrange(plot_images, top_row, middle_row, bottom_row, nrow = 4, 
+figure <- ggarrange(plot_images, top_row, middle_row, bottom_row, nrow = 4, 
           heights = c(2.3, 3, 3, 3))+
   theme(plot.margin = margin(0, 0.1, 0, 0.1, "cm"))
+
+figure
 ```
 
-<img src="Spot_colocalization_analysis_files/figure-html/unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="Spot_colocalization_analysis_files/figure-html/Figure_5-1.png" width="100%" style="display: block; margin: auto;" />
+
+```r
+# export figure as tiff
+tiff("D:/Repositories/2024_Cases_et_al/Figure_5.tiff", 
+     units="in", width=9, height=12, res=600)
+figure
+dev.off()
+```
+
+```
+## png 
+##   2
+```
 
 ## Session Information
 
